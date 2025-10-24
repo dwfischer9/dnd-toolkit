@@ -1,16 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-
-export type Creature = {
-  id: string
-  name: string
-  ac: number
-  maxHp: number
-  currentHp: number
-  initiative: number
-  isActive?: boolean
-  isPlayer?: boolean
-}
+import Creature from '../../types/creature'
 
 export default function CreatureCard({ creature }: { creature: Creature }) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
@@ -46,8 +36,11 @@ export default function CreatureCard({ creature }: { creature: Creature }) {
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-lg font-bold">{creature.name}</h3>
         <span className="text-sm text-gray-400">Init: {creature.initiative}</span>
-      </div>
 
+        <button
+          // onClick{() => ()}
+          className="bg-red-900 px-3 py-1 rounded text-white"> x </button>
+      </div>
       <div className="text-sm mb-2">AC: {creature.ac}</div>
 
       <div className="w-full bg-gray-700 h-3 rounded-full overflow-hidden mb-2">
