@@ -1,6 +1,5 @@
-import CombatScreen from './CombatScreen'
+import Home from './Home'
 
-export default function CombatPage() {
-  return <CombatScreen />
+export default function Page() {
+  return <Home />
 }
-

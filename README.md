@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# D&D Toolkit
 
-## Getting Started
+A lightweight Next.js toolkit for managing D&D combat encounters with creatures, initiative tracking, hit points, and encounter difficulty estimation.
 
-First, run the development server:
+## What it does
+
+- Track creature and player initiative order
+- Manage hit points and active combatants
+- Display encounter XP, adjusted XP, multiplier, and difficulty thresholds
+- Fetch creature data from the D&D 5e API and turn it into usable combat entries
+- Add, remove, and update creatures in a combat encounter
+
+## Tech stack
+
+- Next.js 14+ (App Router)
+- TypeScript
+- PNPM
+- Tailwind-style utility CSS with plain CSS modules
+- Local API routes for creature search and lookup
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `pnpm dev` — run the development server
+- `pnpm build` — build the application for production
+- `pnpm start` — run the production build locally
+- `pnpm test` — execute unit tests for combat state and creature feature logic
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app/` — Next.js app pages and API routes
+- `src/app/combat/` — combat screen, encounter logic, and UI components
+- `src/services/` — creature API client and feature mapping
+- `src/types/` — shared TypeScript types for creatures and combat state
+- `public/` — static assets
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Combat features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Creates a combat encounter with players and creatures
+- Rolls initiative for non-player creatures
+- Calculates adjusted XP and encounter difficulty
+- Keeps local encounter state in `localStorage`
+- Supports creature feature and legendary action tracking
 
-## Deploy on Vercel
+## API integration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app uses the D&D 5e API via local API routes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `GET /api/creatures?q=...` — search creatures
+- `GET /api/creatures/[index]` — fetch creature details
+
+## Notes
+
+- Creature data is normalized into a shared `Creature` type for combat logic
+- The repo aims to use `creature` consistently instead of `monster` in UI and code
+- A custom `creatureFeatures` service maps D&D API abilities and actions into structured feature groups
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Run `pnpm install`
+4. Make changes and verify with `pnpm test`
+5. Open a pull request
+
+## License
+
+This project is unlicensed, unless otherwise specified.
