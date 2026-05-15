@@ -1,34 +1,35 @@
-'use client'
+'use client';
 
-import { useEffect, useState, type FormEvent } from 'react'
-import CombatScreen from '../CombatScreen'
-import { createAccount, loadCurrentUser, signIn, signOut, type AuthUser } from '@/services/auth'
-import { AuthModes } from '@/types/app'
-import type { AuthMode } from '@/types/app'
-import { useLocale } from '@/app/LocaleProvider'
+import { useEffect, useState, type FormEvent } from 'react';
+import CombatScreen from '../CombatScreen';
+import { createAccount, loadCurrentUser, signIn, signOut, type AuthUser } from '@/services/auth';
+import { AuthModes } from '@/types/app';
+import type { AuthMode } from '@/types/app';
+import { useLocale } from '@/app/LocaleProvider';
 
-const getErrorMessage = (error: unknown) => (error instanceof Error ? error.message : 'Something went wrong.')
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : 'Something went wrong.';
 
 export default function CombatAuthGate() {
-  const { t } = useLocale()
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null)
-  const [hydrated, setHydrated] = useState(false)
-  const [mode, setMode] = useState<AuthMode>(AuthModes.SignIn)
-  const [displayName, setDisplayName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
+  const { t } = useLocale();
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+  const [mode, setMode] = useState<AuthMode>(AuthModes.SignIn);
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    setCurrentUser(loadCurrentUser())
-    setHydrated(true)
-  }, [])
+    setCurrentUser(loadCurrentUser());
+    setHydrated(true);
+  }, []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSubmitting(true)
-    setError(null)
+    event.preventDefault();
+    setSubmitting(true);
+    setError(null);
 
     try {
       const nextUser =
@@ -41,35 +42,35 @@ export default function CombatAuthGate() {
           : await signIn({
               email,
               password,
-            })
+            });
 
-      setCurrentUser(nextUser)
+      setCurrentUser(nextUser);
     } catch (submitError) {
-      setError(getErrorMessage(submitError))
+      setError(getErrorMessage(submitError));
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
+  };
 
   const handleSignOut = () => {
-    signOut()
-    setCurrentUser(null)
-    setPassword('')
-    setError(null)
-  }
+    signOut();
+    setCurrentUser(null);
+    setPassword('');
+    setError(null);
+  };
 
   if (!hydrated) {
     return (
       <main className="grid h-[100dvh] place-items-center px-4 text-white">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] px-6 py-5 text-sm text-slate-200 shadow-2xl shadow-black/20 backdrop-blur">
+        <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] px-6 py-5 text-sm text-slate-200 shadow-2xl shadow-black/20 backdrop-blur">
           {t.LoadingCombatConsole}
         </div>
       </main>
-    )
+    );
   }
 
   if (currentUser) {
-    return <CombatScreen currentUser={currentUser} onSignOut={handleSignOut} />
+    return <CombatScreen currentUser={currentUser} onSignOut={handleSignOut} />;
   }
 
   return (
@@ -78,9 +79,7 @@ export default function CombatAuthGate() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-cyan-200/80">{t.AppTitle}</p>
-            <h1 className="mt-3 text-3xl font-semibold text-white">
-              Sign in to run encounters.
-            </h1>
+            <h1 className="mt-3 text-3xl font-semibold text-white">Sign in to run encounters.</h1>
           </div>
           <div className="rounded-full border border-white/10 bg-slate-950/50 px-3 py-1 text-xs text-slate-300">
             Local demo auth
@@ -88,8 +87,8 @@ export default function CombatAuthGate() {
         </div>
 
         <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300">
-          Accounts are stored in this browser for portfolio/demo use. Public music playlists
-          and local audio can be managed after you sign in.
+          Accounts are stored in this browser for portfolio/demo use. Public music playlists and
+          local audio can be managed after you sign in.
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-2 rounded-2xl border border-white/10 bg-slate-950/40 p-2">
@@ -173,5 +172,5 @@ export default function CombatAuthGate() {
         </form>
       </section>
     </main>
-  )
+  );
 }

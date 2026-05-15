@@ -1,4 +1,4 @@
-import { Abilities, AbilityKey, Skills } from './creature'
+import { Abilities, AbilityKey, Skills } from './creature';
 
 export enum Classes {
   Artificer = 'Artificer',
@@ -16,17 +16,17 @@ export enum Classes {
   Wizard = 'Wizard',
 }
 
-export type ClassName = (typeof Classes)[keyof typeof Classes]
-export type SkillLabel = (typeof Skills)[keyof typeof Skills]
+export type ClassName = (typeof Classes)[keyof typeof Classes];
+export type SkillLabel = (typeof Skills)[keyof typeof Skills];
 
 export interface ClassOption {
-  label: ClassName
-  savingThrows: AbilityKey[]
+  label: ClassName;
+  savingThrows: AbilityKey[];
 }
 
 export interface ClassSkillOptions {
-  skills: SkillLabel[]
-  pickCount: number
+  skills: SkillLabel[];
+  pickCount: number;
 }
 
 export const CLASS_SKILL_PRESETS: Partial<Record<ClassName, SkillLabel[]>> = {
@@ -42,7 +42,7 @@ export const CLASS_SKILL_PRESETS: Partial<Record<ClassName, SkillLabel[]>> = {
   [Classes.Sorcerer]: [Skills.Arcana, Skills.Persuasion],
   [Classes.Warlock]: [Skills.Arcana, Skills.Intimidation],
   [Classes.Wizard]: [Skills.Arcana, Skills.History],
-}
+};
 
 export const CLASS_OPTIONS: ClassOption[] = [
   { label: Classes.Barbarian, savingThrows: [Abilities.Strength, Abilities.Constitution] },
@@ -57,7 +57,7 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { label: Classes.Sorcerer, savingThrows: [Abilities.Constitution, Abilities.Charisma] },
   { label: Classes.Warlock, savingThrows: [Abilities.Wisdom, Abilities.Charisma] },
   { label: Classes.Wizard, savingThrows: [Abilities.Intelligence, Abilities.Wisdom] },
-]
+];
 
 export const CLASS_SPELLCASTING_ABILITIES: Partial<Record<ClassName, AbilityKey>> = {
   [Classes.Bard]: Abilities.Charisma,
@@ -68,7 +68,7 @@ export const CLASS_SPELLCASTING_ABILITIES: Partial<Record<ClassName, AbilityKey>
   [Classes.Sorcerer]: Abilities.Charisma,
   [Classes.Warlock]: Abilities.Charisma,
   [Classes.Wizard]: Abilities.Intelligence,
-}
+};
 
 export const CLASS_SKILL_OPTIONS: Partial<Record<ClassName, ClassSkillOptions>> = {
   [Classes.Barbarian]: {
@@ -136,11 +136,25 @@ export const CLASS_SKILL_OPTIONS: Partial<Record<ClassName, ClassSkillOptions>> 
     pickCount: 2,
   },
   [Classes.Monk]: {
-    skills: [Skills.Acrobatics, Skills.Athletics, Skills.History, Skills.Insight, Skills.Religion, Skills.Stealth],
+    skills: [
+      Skills.Acrobatics,
+      Skills.Athletics,
+      Skills.History,
+      Skills.Insight,
+      Skills.Religion,
+      Skills.Stealth,
+    ],
     pickCount: 2,
   },
   [Classes.Paladin]: {
-    skills: [Skills.Athletics, Skills.Insight, Skills.Intimidation, Skills.Medicine, Skills.Persuasion, Skills.Religion],
+    skills: [
+      Skills.Athletics,
+      Skills.Insight,
+      Skills.Intimidation,
+      Skills.Medicine,
+      Skills.Persuasion,
+      Skills.Religion,
+    ],
     pickCount: 2,
   },
   [Classes.Ranger]: {
@@ -173,15 +187,37 @@ export const CLASS_SKILL_OPTIONS: Partial<Record<ClassName, ClassSkillOptions>> 
     pickCount: 4,
   },
   [Classes.Sorcerer]: {
-    skills: [Skills.Arcana, Skills.Deception, Skills.Insight, Skills.Intimidation, Skills.Persuasion, Skills.Religion],
+    skills: [
+      Skills.Arcana,
+      Skills.Deception,
+      Skills.Insight,
+      Skills.Intimidation,
+      Skills.Persuasion,
+      Skills.Religion,
+    ],
     pickCount: 2,
   },
   [Classes.Warlock]: {
-    skills: [Skills.Arcana, Skills.Deception, Skills.History, Skills.Intimidation, Skills.Investigation, Skills.Nature, Skills.Religion],
+    skills: [
+      Skills.Arcana,
+      Skills.Deception,
+      Skills.History,
+      Skills.Intimidation,
+      Skills.Investigation,
+      Skills.Nature,
+      Skills.Religion,
+    ],
     pickCount: 2,
   },
   [Classes.Wizard]: {
-    skills: [Skills.Arcana, Skills.History, Skills.Insight, Skills.Investigation, Skills.Medicine, Skills.Religion],
+    skills: [
+      Skills.Arcana,
+      Skills.History,
+      Skills.Insight,
+      Skills.Investigation,
+      Skills.Medicine,
+      Skills.Religion,
+    ],
     pickCount: 2,
   },
-}
+};

@@ -27,7 +27,8 @@ export const CombatUiText = {
   RollInitiative: 'Lancer l’initiative',
   SignedIn: 'Connecté',
   SearchCreatures: 'Rechercher des créatures',
-  SearchCreaturesBody: 'Cherchez des créatures existantes dans l’API D&D 5e et ajoutez-les à la rencontre.',
+  SearchCreaturesBody:
+    'Cherchez des créatures existantes dans l’API D&D 5e et ajoutez-les à la rencontre.',
   SearchCreaturesPlaceholder: 'Rechercher des créatures à ajouter...',
   SearchCreaturesEmpty: 'Aucune créature trouvée.',
   SearchCreaturesLoading: 'Recherche...',
@@ -41,25 +42,29 @@ export const CombatUiText = {
   Turn: 'Tour',
   TurnNavigation: 'Navigation des tours',
   TurnOrder: 'Ordre des tours',
-} as const
+} as const;
 export const AppText = {
   AppName: 'DND Toolkit',
   BackToCombat: 'Retour au combat',
   CreatureSearch: 'Recherche de créatures',
-  CreatureSearchBody: 'Récupérez des monstres depuis l’API D&D 5e et ajoutez-les à la rencontre en quelques clics.',
+  CreatureSearchBody:
+    'Récupérez des monstres depuis l’API D&D 5e et ajoutez-les à la rencontre en quelques clics.',
   DungeonMasterTools: 'Outils de maître du jeu pour des sessions rapides et fluides',
   EnterCombat: 'Entrer dans le combat',
   EncounterMath: 'Calcul de rencontre',
   EncounterMathValue: 'Auto',
-  HomeHeroBody: 'Gérez les rencontres, les monstres et les calculs importants sans transformer votre préparation en feuille de calcul.',
+  HomeHeroBody:
+    'Gérez les rencontres, les monstres et les calculs importants sans transformer votre préparation en feuille de calcul.',
   HomeHeroTitle: 'Une console de combat qui fait avancer la table.',
   CombatFirst: 'Priorité au combat',
-  CombatFirstBody: 'Suivez l’initiative, les PV, les actions légendaires et l’ordre des tours sans jongler entre les onglets.',
+  CombatFirstBody:
+    'Suivez l’initiative, les PV, les actions légendaires et l’ordre des tours sans jongler entre les onglets.',
   InitiativeTracker: 'Suivi d’initiative',
   InitiativeTrackerValue: 'En direct',
   LocaleLabel: 'Langue',
   LocaleLabelBody: 'Choisissez la langue de l’interface pour les écrans de combat.',
-  LocalStorageBody: 'La rencontre reste dans localStorage pour survivre aux rechargements et aux pauses.',
+  LocalStorageBody:
+    'La rencontre reste dans localStorage pour survivre aux rechargements et aux pauses.',
   LocalStorageTitle: 'Avec état et local',
   OpenCombat: 'Ouvrir le combat',
   Preferences: 'Préférences',
@@ -80,4 +85,4 @@ export const AppText = {
   ToggleAutoFadeDelay: 'Délai de masquage',
   ToggleAutoFadeDelayBody: 'Limiter entre 500 ms et 15 s.',
   WhatIsInside: 'Ce qu’il y a dedans',
-} as const
+} as const;

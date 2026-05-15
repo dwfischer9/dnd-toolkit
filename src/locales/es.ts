@@ -41,7 +41,7 @@ export const CombatUiText = {
   Turn: 'Turno',
   TurnNavigation: 'Navegación de turnos',
   TurnOrder: 'Orden de turno',
-} as const
+} as const;
 export const AppText = {
   AppName: 'DND Toolkit',
   BackToCombat: 'Volver al combate',
@@ -51,15 +51,18 @@ export const AppText = {
   EnterCombat: 'Entrar al combate',
   EncounterMath: 'Cálculo de encuentro',
   EncounterMathValue: 'Automático',
-  HomeHeroBody: 'Dirige encuentros, gestiona monstruos y mantén visible la matemática importante sin convertir tu preparación en una hoja de cálculo.',
+  HomeHeroBody:
+    'Dirige encuentros, gestiona monstruos y mantén visible la matemática importante sin convertir tu preparación en una hoja de cálculo.',
   HomeHeroTitle: 'Una consola de combate que mantiene la mesa en movimiento.',
   CombatFirst: 'Enfocado en combate',
-  CombatFirstBody: 'Sigue iniciativa, PG, acciones legendarias y orden de turnos sin saltar entre pestañas.',
+  CombatFirstBody:
+    'Sigue iniciativa, PG, acciones legendarias y orden de turnos sin saltar entre pestañas.',
   InitiativeTracker: 'Seguimiento de iniciativa',
   InitiativeTrackerValue: 'En vivo',
   LocaleLabel: 'Idioma',
   LocaleLabelBody: 'Elige el idioma de la interfaz para las pantallas de combate.',
-  LocalStorageBody: 'El encuentro se guarda en localStorage para que tu mesa sobreviva a recargas y pausas.',
+  LocalStorageBody:
+    'El encuentro se guarda en localStorage para que tu mesa sobreviva a recargas y pausas.',
   LocalStorageTitle: 'Con estado y local',
   OpenCombat: 'Abrir combate',
   Preferences: 'Preferencias',
@@ -69,7 +72,8 @@ export const AppText = {
   QuickStartStep3: '3. Tira iniciativa, resuelve turnos y mantén la presión.',
   Settings: 'Configuración',
   SettingsSaved: 'Guardado',
-  SettingsSubtitle: 'Ajusta cuánto tiempo permanecen visibles los resultados después de una tirada.',
+  SettingsSubtitle:
+    'Ajusta cuánto tiempo permanecen visibles los resultados después de una tirada.',
   SettingsStorageBody: 'Guardado localmente en tu navegador.',
   SaveSettings: 'Guardar configuración',
   StateLabel: 'Incluido',
@@ -80,4 +84,4 @@ export const AppText = {
   ToggleAutoFadeDelay: 'Retraso de desvanecimiento',
   ToggleAutoFadeDelayBody: 'Limitar entre 500ms y 15s.',
   WhatIsInside: 'Qué incluye',
-} as const
+} as const;

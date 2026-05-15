@@ -1,25 +1,15 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
-import LocaleProvider from './LocaleProvider'
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next';
+import './globals.css';
+import LocaleProvider from './LocaleProvider';
 
 export const metadata: Metadata = {
   title: {
     default: 'DND Toolkit',
     template: '%s · DND Toolkit',
   },
-  description: 'A focused combat console for tracking initiative, health, and encounter difficulty.',
-}
+  description:
+    'A focused combat console for tracking initiative, health, and encounter difficulty.',
+};
 
 export default function RootLayout({
   children,
@@ -28,11 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
-  )
+  );
 }

@@ -2,12 +2,14 @@ export const AppText = {
   AppName: 'DND Toolkit',
   BackToCombat: 'Back to Combat',
   CreatureSearch: 'Creature search',
-  CreatureSearchBody: 'Pull monsters from the D&D 5e API and drop them into the encounter in a few clicks.',
+  CreatureSearchBody:
+    'Pull monsters from the D&D 5e API and drop them into the encounter in a few clicks.',
   DungeonMasterTools: 'Dungeon master tools for fast, focused sessions',
   EnterCombat: 'Enter Combat',
   EncounterMath: 'Encounter math',
   EncounterMathValue: 'Auto',
-  HomeHeroBody: 'Run encounters, manage monsters, and keep the important math visible without turning your prep into a spreadsheet.',
+  HomeHeroBody:
+    'Run encounters, manage monsters, and keep the important math visible without turning your prep into a spreadsheet.',
   HomeHeroTitle: 'A combat console that keeps the table moving.',
   CombatFirst: 'Combat-first',
   CombatFirstBody: 'Track initiative, HP, legendary actions, and turn order without juggling tabs.',
@@ -15,7 +17,8 @@ export const AppText = {
   InitiativeTrackerValue: 'Live',
   LocaleLabel: 'Language',
   LocaleLabelBody: 'Choose the UI language for combat screens.',
-  LocalStorageBody: 'The encounter persists in localStorage so your table survives refreshes and pauses.',
+  LocalStorageBody:
+    'The encounter persists in localStorage so your table survives refreshes and pauses.',
   LocalStorageTitle: 'Stateful and local',
   OpenCombat: 'Open Combat',
   Preferences: 'Preferences',
@@ -36,7 +39,7 @@ export const AppText = {
   ToggleAutoFadeDelay: 'Auto fade delay',
   ToggleAutoFadeDelayBody: 'Clamp between 500ms and 15s.',
   WhatIsInside: "What's inside",
-} as const
+} as const;
 
 export const CombatUiText = {
   AppTitle: 'Combat Console',
@@ -66,7 +69,8 @@ export const CombatUiText = {
   RollInitiative: 'Roll Initiative',
   SignedIn: 'Signed in',
   SearchCreatures: 'Search Creatures',
-  SearchCreaturesBody: 'Look up existing creatures from the D&D 5e API and add them to the encounter.',
+  SearchCreaturesBody:
+    'Look up existing creatures from the D&D 5e API and add them to the encounter.',
   SearchCreaturesPlaceholder: 'Search for creatures to add...',
   SearchCreaturesEmpty: 'No creatures found.',
   SearchCreaturesLoading: 'Searching...',
@@ -81,4 +85,4 @@ export const CombatUiText = {
   Turn: 'Turn',
   TurnNavigation: 'Turn Navigation',
   TurnOrder: 'Turn Order',
-} as const
+} as const;

@@ -1,12 +1,16 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #07111f;
-  --foreground: #e5eefb;
-  --muted: #9fb1c9;
-  --surface: rgba(8, 15, 28, 0.8);
-  --surface-strong: #0d1727;
+  --background: #14110f;
+  --foreground: #f5efe6;
+  --muted: #c4b8a7;
+  --surface: rgba(28, 22, 18, 0.82);
+  --surface-strong: #1f1713;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --accent: #f59e0b;
+  --accent-soft: rgba(245, 158, 11, 0.16);
+  --radius-panel: 1.4rem;
+  --space-panel: 0.9rem;
 }
 
 * {
@@ -16,18 +20,29 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: 'Avenir Next', Avenir, 'Segoe UI', Helvetica, Arial, sans-serif;
   min-height: 100vh;
   background-image:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 28%),
-    radial-gradient(circle at top right, rgba(251, 191, 36, 0.11), transparent 30%),
-    linear-gradient(180deg, #09111d 0%, #07111f 48%, #050b14 100%);
+    radial-gradient(circle at top left, rgba(217, 119, 6, 0.13), transparent 30%),
+    radial-gradient(circle at top right, rgba(20, 184, 166, 0.09), transparent 34%),
+    linear-gradient(180deg, #191311 0%, #14110f 52%, #100c0b 100%);
   background-attachment: fixed;
 }
 
 ::selection {
-  background: rgba(56, 189, 248, 0.35);
+  background: rgba(245, 158, 11, 0.35);
   color: #fff;
+}
+
+.ui-shell {
+  background: color-mix(in srgb, var(--surface-strong) 92%, black);
+}
+
+.ui-panel {
+  border-radius: var(--radius-panel);
+  padding: var(--space-panel);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
 }
 
 a {

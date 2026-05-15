@@ -1,9 +1,9 @@
-import assert from 'node:assert/strict'
-import test from 'node:test'
+import assert from 'node:assert/strict';
+import test from 'node:test';
 
-import type { ApiCreature } from '../types/creature.ts'
-import { CreatureSizes } from '../types/creature.ts'
-import { buildCreatureFeatureGroups, parseSpellcastingDetails } from './creatureFeatures.ts'
+import type { ApiCreature } from '../types/creature.ts';
+import { CreatureSizes } from '../types/creature.ts';
+import { buildCreatureFeatureGroups, parseSpellcastingDetails } from './creatureFeatures.ts';
 
 const apiCreature: ApiCreature = {
   index: 'owlbear',
@@ -66,34 +66,33 @@ const apiCreature: ApiCreature = {
   updated_at: '2026-01-01T00:00:00.000Z',
   forms: [],
   reactions: [],
-}
+};
 
 test('buildCreatureFeatureGroups groups creature reference items for cards', () => {
-  const groups = buildCreatureFeatureGroups(apiCreature)
+  const groups = buildCreatureFeatureGroups(apiCreature);
 
-  assert.equal(groups.length, 2)
-  assert.equal(groups[0].label, 'Traits')
-  assert.equal(groups[1].label, 'Actions')
-  assert.equal(groups[1].features[0].attackBonus, 7)
-  assert.deepEqual(groups[1].features[0].damage, [{ type: 'piercing', dice: '1d10 + 5' }])
-  assert.deepEqual(groups[1].features[1].damage, [{ type: 'piercing', dice: '1d6 + 1' }])
+  assert.equal(groups.length, 2);
+  assert.equal(groups[0].label, 'Traits');
+  assert.equal(groups[1].label, 'Actions');
+  assert.equal(groups[1].features[0].attackBonus, 7);
+  assert.deepEqual(groups[1].features[0].damage, [{ type: 'piercing', dice: '1d10 + 5' }]);
+  assert.deepEqual(groups[1].features[1].damage, [{ type: 'piercing', dice: '1d6 + 1' }]);
   assert.deepEqual(groups[1].features[1].versatileDamage, [
     { type: 'piercing', dice: '1d8 + 1', hands: 'two' },
-  ])
-})
+  ]);
+});
 
 test('parseSpellcastingDetails extracts spellcasting ability, dc, and spells', () => {
   const details = parseSpellcastingDetails([
     {
       name: 'Spellcasting',
-      desc:
-        "The lich is a 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 18, +10 to hit with spell attacks). It has the following wizard spells prepared:\nCantrips (at will): mage hand, prestidigitation, ray of frost\n1st level (4 slots): detect magic, magic missile, shield",
+      desc: 'The lich is a 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 18, +10 to hit with spell attacks). It has the following wizard spells prepared:\nCantrips (at will): mage hand, prestidigitation, ray of frost\n1st level (4 slots): detect magic, magic missile, shield',
       damage: [],
     },
-  ])
+  ]);
 
-  assert.equal(details.spellcastingAbility, 'intelligence')
-  assert.equal(details.spellSaveDc, 18)
+  assert.equal(details.spellcastingAbility, 'intelligence');
+  assert.equal(details.spellSaveDc, 18);
   assert.deepEqual(details.spells, [
     'mage hand',
     'prestidigitation',
@@ -101,5 +100,5 @@ test('parseSpellcastingDetails extracts spellcasting ability, dc, and spells', (
     'detect magic',
     'magic missile',
     'shield',
-  ])
-})
+  ]);
+});

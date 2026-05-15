@@ -1,74 +1,74 @@
-'use client'
+'use client';
 
-import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import {
   buildYouTubePlaylistEmbedUrl,
   extractYouTubePlaylistId,
   loadMusicSettings,
   saveMusicSettings,
-} from '@/services/music'
-import { MusicSources } from '@/types/app'
-import type { MusicSource } from '@/types/app'
+} from '@/services/music';
+import { MusicSources } from '@/types/app';
+import type { MusicSource } from '@/types/app';
 
 interface LocalTrack {
-  id: string
-  name: string
-  url: string
-  type: string
+  id: string;
+  name: string;
+  url: string;
+  type: string;
 }
 
 interface MusicPanelProps {
-  compact?: boolean
+  compact?: boolean;
 }
 
-const buildTrackId = (name: string, index: number) => `${name}:${index}:${crypto.randomUUID()}`
+const buildTrackId = (name: string, index: number) => `${name}:${index}:${crypto.randomUUID()}`;
 
 export default function MusicPanel({ compact = false }: MusicPanelProps) {
-  const [source, setSource] = useState<MusicSource>(MusicSources.YouTube)
-  const [youtubePlaylistInput, setYoutubePlaylistInput] = useState('')
-  const [tracks, setTracks] = useState<LocalTrack[]>([])
-  const [activeTrackId, setActiveTrackId] = useState<string | null>(null)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
-  const tracksRef = useRef<LocalTrack[]>([])
+  const [source, setSource] = useState<MusicSource>(MusicSources.YouTube);
+  const [youtubePlaylistInput, setYoutubePlaylistInput] = useState('');
+  const [tracks, setTracks] = useState<LocalTrack[]>([]);
+  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const tracksRef = useRef<LocalTrack[]>([]);
 
   useEffect(() => {
-    const settings = loadMusicSettings()
-    setSource(settings.source)
-    setYoutubePlaylistInput(settings.youtubePlaylistInput)
-    setIsExpanded(Boolean(settings.youtubePlaylistInput))
-  }, [])
+    const settings = loadMusicSettings();
+    setSource(settings.source);
+    setYoutubePlaylistInput(settings.youtubePlaylistInput);
+    setIsExpanded(Boolean(settings.youtubePlaylistInput));
+  }, []);
 
   useEffect(() => {
-    saveMusicSettings({ source, youtubePlaylistInput })
-  }, [source, youtubePlaylistInput])
+    saveMusicSettings({ source, youtubePlaylistInput });
+  }, [source, youtubePlaylistInput]);
 
   useEffect(() => {
-    tracksRef.current = tracks
-  }, [tracks])
+    tracksRef.current = tracks;
+  }, [tracks]);
 
   useEffect(
     () => () => {
-      tracksRef.current.forEach((track) => window.URL.revokeObjectURL(track.url))
+      tracksRef.current.forEach((track) => window.URL.revokeObjectURL(track.url));
     },
-    []
-  )
+    [],
+  );
 
   const playlistId = useMemo(
     () => extractYouTubePlaylistId(youtubePlaylistInput),
-    [youtubePlaylistInput]
-  )
+    [youtubePlaylistInput],
+  );
   const youtubeEmbedUrl = useMemo(
     () => buildYouTubePlaylistEmbedUrl(youtubePlaylistInput),
-    [youtubePlaylistInput]
-  )
-  const activeTrack = tracks.find((track) => track.id === activeTrackId) ?? null
-  const currentSourceLabel = source === MusicSources.YouTube ? 'YouTube' : 'Local'
+    [youtubePlaylistInput],
+  );
+  const activeTrack = tracks.find((track) => track.id === activeTrackId) ?? null;
+  const currentSourceLabel = source === MusicSources.YouTube ? 'YouTube' : 'Local';
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(event.target.files ?? [])
+    const selectedFiles = Array.from(event.target.files ?? []);
     if (selectedFiles.length === 0) {
-      return
+      return;
     }
 
     const nextTracks = selectedFiles.map((file, index) => ({
@@ -76,51 +76,61 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
       name: file.name,
       url: window.URL.createObjectURL(file),
       type: file.type || 'audio/*',
-    }))
+    }));
 
     setTracks((previousTracks) => {
-      const nextList = [...previousTracks, ...nextTracks]
+      const nextList = [...previousTracks, ...nextTracks];
       if (!activeTrackId && nextList[0]) {
-        setActiveTrackId(nextList[0].id)
+        setActiveTrackId(nextList[0].id);
       }
-      return nextList
-    })
+      return nextList;
+    });
 
-    setSource(MusicSources.Local)
-    setIsExpanded(true)
-    event.target.value = ''
-  }
+    setSource(MusicSources.Local);
+    setIsExpanded(true);
+    event.target.value = '';
+  };
 
   const removeTrack = (trackId: string) => {
     setTracks((previousTracks) => {
-      const nextTracks = previousTracks.filter((track) => track.id !== trackId)
-      const removedTrack = previousTracks.find((track) => track.id === trackId)
+      const nextTracks = previousTracks.filter((track) => track.id !== trackId);
+      const removedTrack = previousTracks.find((track) => track.id === trackId);
       if (removedTrack) {
-        window.URL.revokeObjectURL(removedTrack.url)
+        window.URL.revokeObjectURL(removedTrack.url);
       }
 
       if (activeTrackId === trackId) {
-        setActiveTrackId(nextTracks[0]?.id ?? null)
+        setActiveTrackId(nextTracks[0]?.id ?? null);
       }
 
-      return nextTracks
-    })
-  }
+      return nextTracks;
+    });
+  };
 
   const clearTracks = () => {
-    tracks.forEach((track) => window.URL.revokeObjectURL(track.url))
-    setTracks([])
-    setActiveTrackId(null)
-  }
+    tracks.forEach((track) => window.URL.revokeObjectURL(track.url));
+    setTracks([]);
+    setActiveTrackId(null);
+  };
 
   return (
-    <div className={`rounded-2xl border border-white/10 bg-slate-950/50 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}>
+    <div
+      className={`rounded-2xl border border-white/10 bg-slate-950/50 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h3 className={compact ? 'text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200/80' : 'text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200/80'}>
+          <h3
+            className={
+              compact
+                ? 'text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
+                : 'text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
+            }
+          >
             Music
           </h3>
-          <p className={compact ? 'mt-1 text-[11px] text-slate-400' : 'mt-1 text-xs text-slate-400'}>
+          <p
+            className={compact ? 'mt-1 text-[11px] text-slate-400' : 'mt-1 text-xs text-slate-400'}
+          >
             {currentSourceLabel}
             {source === MusicSources.YouTube && playlistId ? ' playlist ready' : ''}
             {source === MusicSources.Local && tracks.length > 0
@@ -142,7 +152,7 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-            onClick={() => setSource(MusicSources.YouTube)}
+              onClick={() => setSource(MusicSources.YouTube)}
               className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
                 source === MusicSources.YouTube
                   ? 'bg-cyan-400 text-slate-950'
@@ -153,7 +163,7 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
             </button>
             <button
               type="button"
-            onClick={() => setSource(MusicSources.Local)}
+              onClick={() => setSource(MusicSources.Local)}
               className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
                 source === MusicSources.Local
                   ? 'bg-cyan-400 text-slate-950'
@@ -180,7 +190,8 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
               </label>
 
               <p className="text-[11px] leading-5 text-slate-400">
-                Public playlists can play without a login. The embedded player loads here in the browser.
+                Public playlists can play without a login. The embedded player loads here in the
+                browser.
               </p>
 
               {youtubeEmbedUrl ? (
@@ -216,11 +227,7 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
 
               {tracks.length > 0 ? (
                 <div className="space-y-2">
-                  <audio
-                    controls
-                    className="w-full"
-                    src={activeTrack?.url ?? tracks[0]?.url}
-                  />
+                  <audio controls className="w-full" src={activeTrack?.url ?? tracks[0]?.url} />
                   <div className="max-h-40 space-y-1 overflow-y-auto pr-1">
                     {tracks.map((track) => (
                       <div
@@ -266,5 +273,5 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

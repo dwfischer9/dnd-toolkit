@@ -2,28 +2,39 @@
   "name": "dnd-toolkit",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@11.0.6",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test --experimental-strip-types src/app/combat/combatState.test.ts src/services/creatureFeatures.test.ts"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test --experimental-strip-types src/app/combat/combatState.test.ts src/app/combat/importExport.test.ts src/app/combat/creatureCardViewModel.test.ts src/services/creatureFeatures.test.ts"
   },
   "dependencies": {
-    "next": "15.5.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "title-case": "^4.3.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "eslint": "^9",
-    "eslint-config-next": "15.5.6",
+    "eslint-config-next": "16.2.6",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.14",
+      "@types/react-dom": "19.2.3"
+    }
   }
 }

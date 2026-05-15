@@ -1,21 +1,21 @@
 # D&D Toolkit
 
-A lightweight Next.js toolkit for managing D&D combat encounters with creatures, initiative tracking, hit points, and encounter difficulty estimation.
+A local-first Next.js app for running D&D 5e combat encounters with initiative tracking, hit points, effect timing, and encounter difficulty estimation.
 
-## What it does
+## V1 Direction
 
-- Track creature and player initiative order
-- Manage hit points and active combatants
-- Display encounter XP, adjusted XP, multiplier, and difficulty thresholds
-- Fetch creature data from the D&D 5e API and turn it into usable combat entries
-- Add, remove, and update creatures in a combat encounter
+- Single-browser local session (no account requirement)
+- Frontend-first architecture
+- Persistence in browser `localStorage`
+- Import/export planned as the portability and backup mechanism
+- Cloud persistence deferred to v2
 
 ## Tech stack
 
-- Next.js 14+ (App Router)
+- Next.js 16+ (App Router)
 - TypeScript
 - PNPM
-- Tailwind-style utility CSS with plain CSS modules
+- Tailwind-style utility classes
 - Local API routes for creature search and lookup
 
 ## Quick start
@@ -32,7 +32,11 @@ Open [http://localhost:3000](http://localhost:3000).
 - `pnpm dev` — run the development server
 - `pnpm build` — build the application for production
 - `pnpm start` — run the production build locally
-- `pnpm test` — execute unit tests for combat state and creature feature logic
+- `pnpm lint` — run ESLint
+- `pnpm format` — run Prettier write
+- `pnpm format:check` — check Prettier formatting
+- `pnpm test` — execute unit tests for combat state, import/export validation, creature card view-model logic, and creature feature mapping
+- `just test` — run test suite via Justfile
 
 ## Project structure
 
@@ -44,11 +48,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Combat features
 
-- Creates a combat encounter with players and creatures
-- Rolls initiative for non-player creatures
-- Calculates adjusted XP and encounter difficulty
-- Keeps local encounter state in `localStorage`
-- Supports creature feature and legendary action tracking
+- Tracks creature and player initiative order
+- Manages hit points and active combatants
+- Calculates encounter XP, adjusted XP, multiplier, and difficulty
+- Supports legendary resources and feature-use tracking
+- Supports round-based and turn-start-based effect timing
+- Detects defense conflicts (resistance/immunity/vulnerability overlap by scope)
+- Preserves panel scroll position while advancing turns rapidly
 
 ## API integration
 
@@ -60,16 +66,16 @@ This app uses the D&D 5e API via local API routes:
 ## Notes
 
 - Creature data is normalized into a shared `Creature` type for combat logic
-- The repo aims to use `creature` consistently instead of `monster` in UI and code
+- The codebase uses `creature` terminology consistently instead of `monster`
 - A custom `creatureFeatures` service maps D&D API abilities and actions into structured feature groups
+- Spell labels are rendered in title case for display
 
-## Contributing
+## Production docs
 
-1. Fork the repository
-2. Create a feature branch
-3. Run `pnpm install`
-4. Make changes and verify with `pnpm test`
-5. Open a pull request
+- [Release V1 Checklist](./docs/release-v1.md)
+- [Architecture V1](./docs/architecture-v1.md)
+- [Data Format V1](./docs/data-format-v1.md)
+- [Vercel Deploy Runbook](./docs/deploy-vercel.md)
 
 ## License
 

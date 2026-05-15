@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useLocale } from '@/app/LocaleProvider'
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useLocale } from '@/app/LocaleProvider';
 import {
   DEFAULT_UI_SETTINGS,
   loadUiSettingsFromStorage,
   saveUiSettingsToStorage,
-} from '@/services/uiSettings'
-import { LOCALE_LABELS, SUPPORTED_LOCALES } from '@/locales'
+} from '@/services/uiSettings';
+import { LOCALE_LABELS, SUPPORTED_LOCALES } from '@/locales';
 
 export default function SettingsPage() {
-  const { locale, setLocale, app } = useLocale()
-  const [settings, setSettings] = useState(DEFAULT_UI_SETTINGS)
-  const [saved, setSaved] = useState(false)
+  const { setLocale, app } = useLocale();
+  const [settings, setSettings] = useState(DEFAULT_UI_SETTINGS);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    setSettings(loadUiSettingsFromStorage())
-  }, [])
+    setSettings(loadUiSettingsFromStorage());
+  }, []);
 
   const saveSettings = () => {
-    saveUiSettingsToStorage(settings)
-    setLocale(settings.locale)
-    setSaved(true)
-    window.setTimeout(() => setSaved(false), 1500)
-  }
+    saveUiSettingsToStorage(settings);
+    setLocale(settings.locale);
+    setSaved(true);
+    window.setTimeout(() => setSaved(false), 1500);
+  };
 
   return (
     <main className="min-h-screen px-6 py-10 text-white md:px-10">
@@ -66,7 +66,7 @@ export default function SettingsPage() {
                 onChange={(event) =>
                   setSettings((previous) => ({
                     ...previous,
-                    locale: event.target.value as typeof locale,
+                    locale: event.target.value as (typeof SUPPORTED_LOCALES)[number],
                   }))
                 }
                 className="h-11 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-cyan-400/70"
@@ -111,7 +111,10 @@ export default function SettingsPage() {
                 onChange={(event) =>
                   setSettings((previous) => ({
                     ...previous,
-                    resultPopupAutoFadeMs: Math.min(15000, Math.max(500, Number(event.target.value) || 3000)),
+                    resultPopupAutoFadeMs: Math.min(
+                      15000,
+                      Math.max(500, Number(event.target.value) || 3000),
+                    ),
                   }))
                 }
                 className="h-11 w-32 rounded-xl border border-white/10 bg-white/5 px-3 text-right text-sm text-white outline-none focus:border-cyan-400/70"
@@ -132,5 +135,5 @@ export default function SettingsPage() {
         </section>
       </div>
     </main>
-  )
+  );
 }

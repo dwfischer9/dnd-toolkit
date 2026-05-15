@@ -1,90 +1,94 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useState } from 'react'
-import { creatureApi, CreatureSearchResult } from '../../../services/creatureApi'
-import type Creature from '../../../types/creature'
+import { useCallback, useEffect, useState } from 'react';
+import { creatureApi, CreatureSearchResult } from '../../../services/creatureApi';
+import type Creature from '../../../types/creature';
 
 interface CreatureSearchModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onAddCreature: (creature: Creature) => void
+  isOpen: boolean;
+  onClose: () => void;
+  onAddCreature: (creature: Creature) => void;
 }
 
-export default function CreatureSearchModal({ isOpen, onClose, onAddCreature }: CreatureSearchModalProps) {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<CreatureSearchResult[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [selectedCreature, setSelectedCreature] = useState<CreatureSearchResult | null>(null)
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+export default function CreatureSearchModal({
+  isOpen,
+  onClose,
+  onAddCreature,
+}: CreatureSearchModalProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<CreatureSearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedCreature, setSelectedCreature] = useState<CreatureSearchResult | null>(null);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleClose = useCallback(() => {
-    onClose()
-    setSearchQuery('')
-    setSearchResults([])
-    setSelectedCreature(null)
-    setError(null)
-    setIsLoading(false)
-    setIsLoadingDetails(false)
-  }, [onClose])
+    onClose();
+    setSearchQuery('');
+    setSearchResults([]);
+    setSelectedCreature(null);
+    setError(null);
+    setIsLoading(false);
+    setIsLoadingDetails(false);
+  }, [onClose]);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
-      setSearchResults([])
-      setIsLoading(false)
-      return
+      setSearchResults([]);
+      setIsLoading(false);
+      return;
     }
 
     const timeoutId = window.setTimeout(async () => {
-      setIsLoading(true)
-      setError(null)
+      setIsLoading(true);
+      setError(null);
       try {
-        const response = await creatureApi.searchCreatures(searchQuery)
-        setSearchResults(response.results || [])
+        const response = await creatureApi.searchCreatures(searchQuery);
+        setSearchResults(response.results || []);
       } catch (searchError) {
-        setError(searchError instanceof Error ? searchError.message : 'Failed to search creatures')
-        setSearchResults([])
+        setError(searchError instanceof Error ? searchError.message : 'Failed to search creatures');
+        setSearchResults([]);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }, 300)
+    }, 300);
 
-    return () => window.clearTimeout(timeoutId)
-  }, [searchQuery])
+    return () => window.clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   useEffect(() => {
     if (!isOpen) {
-      return
+      return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        handleClose()
+        handleClose();
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleClose, isOpen])
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleClose, isOpen]);
 
   const handleCreatureSelect = async (creature: CreatureSearchResult) => {
-    setSelectedCreature(creature)
-    setIsLoadingDetails(true)
-    setError(null)
+    setSelectedCreature(creature);
+    setIsLoadingDetails(true);
+    setError(null);
 
     try {
-      const apiCreature = await creatureApi.getCreatureDetails(creature.index)
-      const convertedCreature = creatureApi.convertApiCreatureToCreature(apiCreature)
-      onAddCreature(convertedCreature)
-      handleClose()
+      const apiCreature = await creatureApi.getCreatureDetails(creature.index);
+      const convertedCreature = creatureApi.convertApiCreatureToCreature(apiCreature);
+      onAddCreature(convertedCreature);
+      handleClose();
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'Failed to load creature details')
+      setError(loadError instanceof Error ? loadError.message : 'Failed to load creature details');
     } finally {
-      setIsLoadingDetails(false)
+      setIsLoadingDetails(false);
     }
-  }
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 px-4 py-6 backdrop-blur-sm">
@@ -111,7 +115,7 @@ export default function CreatureSearchModal({ isOpen, onClose, onAddCreature }: 
             placeholder="Search for creatures..."
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 px-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/70 focus:bg-white/10"
+            className="h-12 w-full rounded-2xl border border-white/10 bg-white/5 px-4 text-white outline-none placeholder:text-slate-500 focus:border-amber-400/70 focus:bg-white/10"
             autoFocus
           />
         </div>
@@ -142,7 +146,7 @@ export default function CreatureSearchModal({ isOpen, onClose, onAddCreature }: 
                   key={creature.index}
                   type="button"
                   onClick={() => handleCreatureSelect(creature)}
-                  className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left transition hover:border-cyan-400/40 hover:bg-white/[0.08]"
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left transition hover:border-amber-400/40 hover:bg-white/[0.08]"
                 >
                   <div className="min-w-0">
                     <div className="truncate font-medium text-white">{creature.name}</div>
@@ -151,7 +155,7 @@ export default function CreatureSearchModal({ isOpen, onClose, onAddCreature }: 
                     </div>
                   </div>
                   {isLoadingDetails && selectedCreature?.index === creature.index && (
-                    <div className="shrink-0 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">
+                    <div className="shrink-0 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs text-amber-200">
                       Loading...
                     </div>
                   )}
@@ -168,5 +172,5 @@ export default function CreatureSearchModal({ isOpen, onClose, onAddCreature }: 
         </div>
       </div>
     </div>
-  )
+  );
 }

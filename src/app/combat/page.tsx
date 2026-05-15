@@ -1,5 +1,5 @@
-import CombatAuthGate from './components/CombatAuthGate'
+import CombatAuthGate from './components/CombatAuthGate';
 
 export default function CombatPage() {
-  return <CombatAuthGate />
+  return <CombatAuthGate />;
 }

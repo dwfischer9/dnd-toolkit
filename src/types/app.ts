@@ -1,39 +1,38 @@
 export const BuilderModes = {
   Pc: 'pc',
   Monster: 'monster',
-} as const
+} as const;
 
-export type BuilderMode = (typeof BuilderModes)[keyof typeof BuilderModes]
+export type BuilderMode = (typeof BuilderModes)[keyof typeof BuilderModes];
 
 export const BuilderContexts = {
   New: 'new',
   Library: 'library',
   Encounter: 'encounter',
-} as const
+} as const;
 
-export type BuilderContext = (typeof BuilderContexts)[keyof typeof BuilderContexts]
+export type BuilderContext = (typeof BuilderContexts)[keyof typeof BuilderContexts];
 
 export const AuthModes = {
   SignIn: 'sign-in',
   Create: 'create',
-} as const
+} as const;
 
-export type AuthMode = (typeof AuthModes)[keyof typeof AuthModes]
+export type AuthMode = (typeof AuthModes)[keyof typeof AuthModes];
 
 export const MusicSources = {
   YouTube: 'youtube',
   Local: 'local',
-} as const
+} as const;
 
-export type MusicSource = (typeof MusicSources)[keyof typeof MusicSources]
+export type MusicSource = (typeof MusicSources)[keyof typeof MusicSources];
 
 export const CreatureSaveActions = {
   Save: 'save',
   Add: 'add',
-} as const
+} as const;
 
-export type CreatureSaveAction =
-  (typeof CreatureSaveActions)[keyof typeof CreatureSaveActions]
+export type CreatureSaveAction = (typeof CreatureSaveActions)[keyof typeof CreatureSaveActions];
 
 export const StorageKeys = {
   AuthUsers: 'dnd-toolkit:auth-users',
@@ -42,4 +41,4 @@ export const StorageKeys = {
   CombatEncounter: 'dnd-toolkit:combat-encounter',
   MusicSettings: 'dnd-toolkit:music-settings',
   UiSettings: 'dnd-toolkit:ui-settings',
-} as const
+} as const;

@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { creatureApi, type CreatureSearchResult } from '@/services/creatureApi'
-import type Creature from '@/types/creature'
-import { useLocale } from '@/app/LocaleProvider'
+import { useEffect, useState } from 'react';
+import { creatureApi, type CreatureSearchResult } from '@/services/creatureApi';
+import type Creature from '@/types/creature';
+import { useLocale } from '@/app/LocaleProvider';
 
 interface CreatureSearchPanelProps {
-  onAddCreature: (creature: Creature) => void
-  onCreateCreature: () => void
-  compact?: boolean
+  onAddCreature: (creature: Creature) => void;
+  onCreateCreature: () => void;
+  compact?: boolean;
 }
 
 export default function CreatureSearchPanel({
@@ -16,75 +16,87 @@ export default function CreatureSearchPanel({
   onCreateCreature,
   compact = false,
 }: CreatureSearchPanelProps) {
-  const { t } = useLocale()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<CreatureSearchResult[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [selectedCreature, setSelectedCreature] = useState<CreatureSearchResult | null>(null)
-  const [isLoadingDetails, setIsLoadingDetails] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { t } = useLocale();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<CreatureSearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedCreature, setSelectedCreature] = useState<CreatureSearchResult | null>(null);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
-      setSearchResults([])
-      setIsLoading(false)
-      setError(null)
-      return
+      setSearchResults([]);
+      setIsLoading(false);
+      setError(null);
+      return;
     }
 
     const timeoutId = window.setTimeout(async () => {
-      setIsLoading(true)
-      setError(null)
+      setIsLoading(true);
+      setError(null);
 
       try {
-        const response = await creatureApi.searchCreatures(searchQuery)
-        setSearchResults(response.results || [])
+        const response = await creatureApi.searchCreatures(searchQuery);
+        setSearchResults(response.results || []);
       } catch (searchError) {
-        setError(searchError instanceof Error ? searchError.message : t.SearchCreaturesFailed)
-        setSearchResults([])
+        setError(searchError instanceof Error ? searchError.message : t.SearchCreaturesFailed);
+        setSearchResults([]);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }, 300)
+    }, 300);
 
-    return () => window.clearTimeout(timeoutId)
-  }, [searchQuery, t.SearchCreaturesFailed])
+    return () => window.clearTimeout(timeoutId);
+  }, [searchQuery, t.SearchCreaturesFailed]);
 
   const handleCreatureSelect = async (creature: CreatureSearchResult) => {
-    setSelectedCreature(creature)
-    setIsLoadingDetails(true)
-    setError(null)
+    setSelectedCreature(creature);
+    setIsLoadingDetails(true);
+    setError(null);
 
     try {
-      const apiCreature = await creatureApi.getCreatureDetails(creature.index)
-      const convertedCreature = creatureApi.convertApiCreatureToCreature(apiCreature)
-      onAddCreature(convertedCreature)
-      setSearchQuery('')
-      setSearchResults([])
+      const apiCreature = await creatureApi.getCreatureDetails(creature.index);
+      const convertedCreature = creatureApi.convertApiCreatureToCreature(apiCreature);
+      onAddCreature(convertedCreature);
+      setSearchQuery('');
+      setSearchResults([]);
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t.LoadCreatureDetailsFailed)
+      setError(loadError instanceof Error ? loadError.message : t.LoadCreatureDetailsFailed);
     } finally {
-      setIsLoadingDetails(false)
-      setSelectedCreature(null)
+      setIsLoadingDetails(false);
+      setSelectedCreature(null);
     }
-  }
+  };
 
   return (
-    <section className={`rounded-2xl border border-white/10 bg-white/[0.03] ${compact ? 'p-3' : 'p-4'}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className={compact ? 'text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/80' : 'text-sm font-semibold uppercase tracking-[0.24em] text-cyan-200/80'}>
+    <section
+      className={`min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] ${compact ? 'p-3' : 'p-4'}`}
+    >
+      <div className="grid grid-cols-1 gap-2">
+        <div className="min-w-0 flex-1">
+          <h3
+            className={
+              compact
+                ? 'text-xs font-semibold uppercase tracking-[0.24em] text-amber-200/85'
+                : 'text-sm font-semibold uppercase tracking-[0.24em] text-amber-200/85'
+            }
+          >
             {t.SearchCreatures}
           </h3>
-          <p className={compact ? 'mt-1 text-[11px] text-slate-400' : 'mt-1 text-sm text-slate-400'}>
+          <p
+            className={compact ? 'mt-1 text-[11px] text-slate-400' : 'mt-1 text-sm text-slate-400'}
+          >
             {t.SearchCreaturesBody}
           </p>
         </div>
         <button
           type="button"
           onClick={onCreateCreature}
-          className={`shrink-0 rounded-full border border-cyan-400/20 bg-cyan-400/10 font-medium text-cyan-100 transition hover:bg-cyan-400/15 ${
-            compact ? 'px-3 py-1 text-[11px]' : 'px-4 py-2 text-sm'
+          className={`rounded-full border border-amber-400/20 bg-amber-400/10 font-medium text-amber-100 transition hover:bg-amber-400/15 ${
+            compact
+              ? 'w-full px-3 py-1 text-[11px] text-center'
+              : 'w-full px-4 py-2 text-sm'
           }`}
         >
           {t.CreateCreature}
@@ -97,7 +109,7 @@ export default function CreatureSearchPanel({
           placeholder={t.SearchCreaturesPlaceholder}
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
-          className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/70 focus:bg-white/10"
+          className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950 px-4 text-white outline-none placeholder:text-slate-500 focus:border-amber-400/70 focus:bg-white/10"
         />
 
         {isLoading && (
@@ -119,22 +131,22 @@ export default function CreatureSearchPanel({
         )}
 
         {!isLoading && searchResults.length > 0 && (
-          <div className="grid gap-2">
+          <div className="grid min-w-0 gap-2">
             {searchResults.map((creature) => (
               <button
                 key={creature.index}
                 type="button"
                 onClick={() => void handleCreatureSelect(creature)}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 text-left transition hover:border-cyan-400/40 hover:bg-white/[0.08]"
+                className="flex w-full min-w-0 items-center justify-between gap-2 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3 text-left transition hover:border-amber-400/40 hover:bg-white/[0.08]"
               >
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="truncate font-medium text-white">{creature.name}</div>
-                  <div className="mt-1 text-sm text-slate-400">
+                  <div className="mt-1 truncate text-sm text-slate-400">
                     CR {creature.challengeRating ?? '?'} · XP {creature.xp ?? '?'}
                   </div>
                 </div>
                 {isLoadingDetails && selectedCreature?.index === creature.index && (
-                  <div className="shrink-0 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">
+                  <div className="shrink-0 whitespace-nowrap rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs text-amber-200">
                     {t.LoadingCreature}
                   </div>
                 )}
@@ -150,5 +162,5 @@ export default function CreatureSearchPanel({
         )}
       </div>
     </section>
-  )
+  );
 }

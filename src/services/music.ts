@@ -1,78 +1,83 @@
-import { MusicSources, StorageKeys } from '@/types/app'
+import { MusicSources, StorageKeys } from '@/types/app';
 
-export const MUSIC_SETTINGS_STORAGE_KEY = StorageKeys.MusicSettings
+export const MUSIC_SETTINGS_STORAGE_KEY = StorageKeys.MusicSettings;
 
-export type MusicSource = (typeof MusicSources)[keyof typeof MusicSources]
+export type MusicSource = (typeof MusicSources)[keyof typeof MusicSources];
 
 export interface MusicSettings {
-  source: MusicSource
-  youtubePlaylistInput: string
+  source: MusicSource;
+  youtubePlaylistInput: string;
 }
 
 export const DEFAULT_MUSIC_SETTINGS: MusicSettings = {
   source: MusicSources.YouTube,
   youtubePlaylistInput: '',
-}
+};
 
-export const normalizeMusicSettings = (raw: Partial<MusicSettings> | null | undefined): MusicSettings => ({
+export const normalizeMusicSettings = (
+  raw: Partial<MusicSettings> | null | undefined,
+): MusicSettings => ({
   source: raw?.source === MusicSources.Local ? MusicSources.Local : MusicSources.YouTube,
   youtubePlaylistInput:
     typeof raw?.youtubePlaylistInput === 'string' ? raw.youtubePlaylistInput : '',
-})
+});
 
 export const loadMusicSettings = (): MusicSettings => {
   if (typeof window === 'undefined') {
-    return DEFAULT_MUSIC_SETTINGS
+    return DEFAULT_MUSIC_SETTINGS;
   }
 
   try {
-    const rawValue = window.localStorage.getItem(MUSIC_SETTINGS_STORAGE_KEY)
+    const rawValue = window.localStorage.getItem(MUSIC_SETTINGS_STORAGE_KEY);
     if (!rawValue) {
-      return DEFAULT_MUSIC_SETTINGS
+      return DEFAULT_MUSIC_SETTINGS;
     }
 
-    return normalizeMusicSettings(JSON.parse(rawValue) as Partial<MusicSettings>)
+    return normalizeMusicSettings(JSON.parse(rawValue) as Partial<MusicSettings>);
   } catch {
-    return DEFAULT_MUSIC_SETTINGS
+    return DEFAULT_MUSIC_SETTINGS;
   }
-}
+};
 
 export const saveMusicSettings = (settings: MusicSettings) => {
   if (typeof window === 'undefined') {
-    return
+    return;
   }
 
-  window.localStorage.setItem(MUSIC_SETTINGS_STORAGE_KEY, JSON.stringify(normalizeMusicSettings(settings)))
-}
+  window.localStorage.setItem(
+    MUSIC_SETTINGS_STORAGE_KEY,
+    JSON.stringify(normalizeMusicSettings(settings)),
+  );
+};
 
 export const extractYouTubePlaylistId = (input: string) => {
-  const trimmed = input.trim()
+  const trimmed = input.trim();
   if (!trimmed) {
-    return ''
+    return '';
   }
 
   if (!trimmed.includes('http')) {
-    return trimmed
+    return trimmed;
   }
 
   try {
-    const url = new URL(trimmed)
-    const playlistId = url.searchParams.get('list')
+    const url = new URL(trimmed);
+    const playlistId = url.searchParams.get('list');
     if (playlistId) {
-      return playlistId
+      return playlistId;
     }
 
-    const pathSegments = url.pathname.split('/').filter(Boolean)
-    return pathSegments[pathSegments.length - 1] ?? ''
+    const pathSegments = url.pathname.split('/').filter(Boolean);
+    return pathSegments[pathSegments.length - 1] ?? '';
   } catch {
-    return trimmed
+    return trimmed;
   }
-}
+};
 
 export const buildYouTubePlaylistEmbedUrl = (input: string) => {
-  const playlistId = extractYouTubePlaylistId(input)
+  const playlistId = extractYouTubePlaylistId(input);
   if (!playlistId) {
-    return ''
+    return '';
   }
 
   const params = new URLSearchParams({
@@ -80,7 +85,7 @@ export const buildYouTubePlaylistEmbedUrl = (input: string) => {
     rel: '0',
     modestbranding: '1',
     playsinline: '1',
-  })
+  });
 
-  return `https://www.youtube-nocookie.com/embed/videoseries?${params.toString()}`
-}
+  return `https://www.youtube-nocookie.com/embed/videoseries?${params.toString()}`;
+};

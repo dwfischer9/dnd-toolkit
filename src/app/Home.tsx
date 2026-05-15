@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useLocale } from '@/app/LocaleProvider'
+import Link from 'next/link';
+import { useLocale } from '@/app/LocaleProvider';
 
 export default function Home() {
-  const { app } = useLocale()
+  const { app } = useLocale();
 
   const highlights = [
     {
@@ -19,13 +19,13 @@ export default function Home() {
       title: app.StatefulTitle,
       body: app.LocalStorageBody,
     },
-  ]
+  ];
 
   const metrics = [
     { label: app.InitiativeTracker, value: app.InitiativeTrackerValue },
     { label: app.CreatureSearch, value: app.StateValue },
     { label: app.EncounterMath, value: app.EncounterMathValue },
-  ]
+  ];
 
   return (
     <main className="min-h-screen px-6 py-10 text-white md:px-10 lg:px-12">
@@ -46,15 +46,11 @@ export default function Home() {
         <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-7 shadow-2xl shadow-black/20 backdrop-blur">
             <div className="max-w-3xl">
-              <p className="text-sm uppercase tracking-[0.3em] text-cyan-200/80">
-                {app.AppName}
-              </p>
+              <p className="text-sm uppercase tracking-[0.3em] text-cyan-200/80">{app.AppName}</p>
               <h1 className="mt-4 text-5xl font-semibold leading-tight text-white md:text-6xl">
                 {app.HomeHeroTitle}
               </h1>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-                {app.HomeHeroBody}
-              </p>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">{app.HomeHeroBody}</p>
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -124,5 +120,5 @@ export default function Home() {
         </section>
       </div>
     </main>
-  )
+  );
 }
