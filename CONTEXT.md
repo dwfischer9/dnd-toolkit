@@ -32,6 +32,18 @@ _Avoid_: Phase, wave
 The elapsed in-encounter time derived from round progression at 6 seconds per round.
 _Avoid_: Wall-clock time, real time
 
+**Local Session**:
+An anonymous browser-only usage model where encounter and library data remain on-device and are persisted in local storage.
+_Avoid_: Account session, cloud session
+
+**Authentication Boundary**:
+The explicit rule that encounter usage has no login, no user identity, and no account state.
+_Avoid_: Optional login shell, hidden account mode
+
+**Anonymous Interface**:
+All combat and settings interfaces operate without user-bound props, profile data, or sign-out controls.
+_Avoid_: currentUser state, session-aware UI
+
 **Round Transition**:
 The event where round count increments on a valid wrap from the last creature to the first creature in initiative order.
 _Avoid_: Auto increment, implicit tick
@@ -103,6 +115,10 @@ _Avoid_: Mid-turn expiry, early cutoff
 ## Relationships
 
 - An **Encounter** contains one or more **Creature** records
+- The toolkit runs as a **Local Session** with no login requirement
+- A **Local Session** does not provide cloud sync or account-based recovery
+- The **Authentication Boundary** forbids auth-gated combat access
+- The **Anonymous Interface** removes user identity and sign-out interactions from UI components
 - An **Encounter** maintains exactly one **Initiative Order** when creatures exist
 - An **Encounter** has zero or one **Active Creature**
 - The **Turn Lifecycle** operates on exactly one **Active Creature** at a time

@@ -13,13 +13,6 @@ export const BuilderContexts = {
 
 export type BuilderContext = (typeof BuilderContexts)[keyof typeof BuilderContexts];
 
-export const AuthModes = {
-  SignIn: 'sign-in',
-  Create: 'create',
-} as const;
-
-export type AuthMode = (typeof AuthModes)[keyof typeof AuthModes];
-
 export const MusicSources = {
   YouTube: 'youtube',
   Local: 'local',
@@ -35,8 +28,6 @@ export const CreatureSaveActions = {
 export type CreatureSaveAction = (typeof CreatureSaveActions)[keyof typeof CreatureSaveActions];
 
 export const StorageKeys = {
-  AuthUsers: 'dnd-toolkit:auth-users',
-  AuthSession: 'dnd-toolkit:auth-session',
   CreatureLibrary: 'dnd-toolkit:creature-library',
   CombatEncounter: 'dnd-toolkit:combat-encounter',
   MusicSettings: 'dnd-toolkit:music-settings',

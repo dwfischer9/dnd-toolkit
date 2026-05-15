@@ -190,8 +190,8 @@ export default function MusicPanel({ compact = false }: MusicPanelProps) {
               </label>
 
               <p className="text-[11px] leading-5 text-slate-400">
-                Public playlists can play without a login. The embedded player loads here in the
-                browser.
+                Public playlists can play directly in this browser. The embedded player loads
+                below.
               </p>
 
               {youtubeEmbedUrl ? (

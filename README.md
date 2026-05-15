@@ -10,6 +10,14 @@ A local-first Next.js app for running D&D 5e combat encounters with initiative t
 - Import/export planned as the portability and backup mechanism
 - Cloud persistence deferred to v2
 
+## V2 Local-Session Migration Summary
+
+- Authentication was removed from combat flow and supporting services.
+- `/combat` now loads directly without a login/auth gate.
+- Encounter + creature library remain browser-local in `localStorage`.
+- Import/export remains the only portability and backup mechanism.
+- UI and domain language now treat the app as anonymous/local-session-only.
+
 ## Tech stack
 
 - Next.js 16+ (App Router)

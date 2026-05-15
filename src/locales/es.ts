@@ -24,7 +24,6 @@ export const CombatUiText = {
   QuickActions: 'Acciones rápidas',
   Round: 'Ronda',
   RollInitiative: 'Tirar iniciativa',
-  SignedIn: 'Sesión iniciada',
   SearchCreatures: 'Buscar criaturas',
   SearchCreaturesBody: 'Busca criaturas existentes en la API de D&D 5e y añádelas al encuentro.',
   SearchCreaturesPlaceholder: 'Busca criaturas para añadir...',

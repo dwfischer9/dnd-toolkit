@@ -67,7 +67,6 @@ export const CombatUiText = {
   QuickActions: 'Quick Actions',
   Round: 'Round',
   RollInitiative: 'Roll Initiative',
-  SignedIn: 'Signed in',
   SearchCreatures: 'Search Creatures',
   SearchCreaturesBody:
     'Look up existing creatures from the D&D 5e API and add them to the encounter.',

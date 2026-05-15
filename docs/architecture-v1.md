@@ -37,14 +37,13 @@ Introduce backend persistence when one or more become required:
 - Cross-device continuity for a single user
 - Durable cloud backup/restore
 - Shared encounters / collaboration
-- Centralized user identity and account management
 - Audit/version history requirements
 
 ## V2 First Backend Slice (Recommended)
 
 - Single-user private cloud sync first
 - Keep encounter model compatible with existing local export/import shape
-- Add auth only as needed for private data ownership
+- Maintain anonymous/local-first usage as default even if optional sync is introduced, with no mandatory auth/account boundary
 
 ## Non-goals In V1
 
