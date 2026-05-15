@@ -11,6 +11,7 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types src/app/combat/combatState.test.ts src/app/combat/importExport.test.ts src/app/combat/creatureCardViewModel.test.ts src/services/creatureFeatures.test.ts"
   },
   "dependencies": {

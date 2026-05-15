@@ -49,7 +49,9 @@ export default function CreatureCard({
     feature: CreatureFeature;
     rect: DOMRect;
   } | null>(null);
-  const [effectCategory, setEffectCategory] = useState(CreatureDefenseEffectCategories.Resistance);
+  const [effectCategory, setEffectCategory] = useState<CreatureDefenseEffectCategory>(
+    CreatureDefenseEffectCategories.Resistance,
+  );
   const [effectScope, setEffectScope] = useState('all damage types');
   const [effectDuration, setEffectDuration] = useState('');
   const [effectTiming, setEffectTiming] = useState<'round' | 'turn_start'>('round');
