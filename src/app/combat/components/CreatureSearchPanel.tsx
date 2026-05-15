@@ -94,9 +94,7 @@ export default function CreatureSearchPanel({
           type="button"
           onClick={onCreateCreature}
           className={`rounded-full border border-amber-400/20 bg-amber-400/10 font-medium text-amber-100 transition hover:bg-amber-400/15 ${
-            compact
-              ? 'w-full px-3 py-1 text-[11px] text-center'
-              : 'w-full px-4 py-2 text-sm'
+            compact ? 'w-full px-3 py-1 text-[11px] text-center' : 'w-full px-4 py-2 text-sm'
           }`}
         >
           {t.CreateCreature}

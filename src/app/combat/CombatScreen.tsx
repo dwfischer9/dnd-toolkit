@@ -121,7 +121,12 @@ const getEncounterMultiplier = (creatureCount: number, playerCount: number) => {
   return baseMultiplier;
 };
 
-export default function CombatScreen() {
+interface CombatScreenProps {
+  currentUser?: unknown;
+  onSignOut?: () => void;
+}
+
+export default function CombatScreen({}: CombatScreenProps = {}) {
   const [creatures, setCreatures] = useState<Creature[]>([]);
   const [activeCreatureId, setActiveCreatureId] = useState<string>(initialCreatures[0].id);
   const [round, setRound] = useState(1);
