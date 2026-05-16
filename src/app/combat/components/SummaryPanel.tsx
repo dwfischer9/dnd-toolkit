@@ -39,11 +39,19 @@ const SummaryPanel = ({
   const multiplierLabel = encounter.multiplier === 1 ? 'x' : `${encounter.multiplier}x`;
 
   return (
-    <div className={`min-w-0 ${compact ? 'space-y-2' : 'space-y-4'}`}>
-      <h2 className={compact ? 'text-lg font-bold' : 'text-2xl font-bold'}>{t.Summary}</h2>
+    <div className={`min-w-0 ${compact ? 'space-y-2' : 'space-y-3'}`}>
+      <h2
+        className={
+          compact
+            ? 'text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-300'
+            : 'text-xs font-semibold uppercase tracking-[0.24em] text-stone-300'
+        }
+      >
+        {t.Summary}
+      </h2>
 
       <div
-        className={`rounded-lg border border-white/10 bg-stone-900/80 ${compact ? 'space-y-1.5 p-3 text-xs' : 'space-y-3 p-4'}`}
+        className={`rounded-xl border border-white/10 bg-black/20 ${compact ? 'space-y-1 p-2.5 text-[11px]' : 'space-y-2 p-3 text-xs'}`}
       >
         <div className="flex justify-between">
           <span>{t.Round}</span>
@@ -64,20 +72,12 @@ const SummaryPanel = ({
       </div>
 
       <div
-        className={`rounded-lg border border-white/10 bg-stone-900/80 ${compact ? 'space-y-1.5 p-3 text-xs' : 'space-y-3 p-4'}`}
+        className={`rounded-xl border border-amber-200/20 bg-amber-950/15 ${compact ? 'space-y-1 p-2.5 text-[11px]' : 'space-y-2 p-3 text-xs'}`}
       >
-        <div className="flex items-center justify-between">
-          <h3
-            className={
-              compact
-                ? 'text-sm font-semibold text-amber-300'
-                : 'text-lg font-semibold text-amber-300'
-            }
-          >
-            {t.Encounter}
-          </h3>
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] uppercase tracking-wide text-gray-400">Party Lv</span>
+        <div className="flex items-center justify-between gap-3">
+          <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-200">{t.Encounter}</h3>
+          <label className="flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wide text-stone-400">Party Lv</span>
             <input
               type="number"
               min={1}
@@ -86,14 +86,14 @@ const SummaryPanel = ({
               onChange={(event) =>
                 onPartyLevelChange(Math.min(20, Math.max(1, Number(event.target.value) || 1)))
               }
-              className="h-6 w-12 rounded border border-gray-600 bg-gray-900 px-1 text-center text-xs text-white"
+              className="h-6 w-11 rounded border border-white/20 bg-black/30 px-1 text-center text-[11px] text-white"
             />
-          </div>
+          </label>
         </div>
-        <div className={compact ? 'space-y-1 text-xs' : 'space-y-1.5 text-sm'}>
+        <div className="space-y-1.5">
           <div className="flex justify-between">
             <span>Difficulty</span>
-            <span className="font-semibold">{encounter.difficulty}</span>
+            <span className="font-semibold text-amber-100">{encounter.difficulty}</span>
           </div>
           <div className="flex justify-between">
             <span>
@@ -113,29 +113,22 @@ const SummaryPanel = ({
               {encounter.adjustedXp} ({multiplierLabel})
             </span>
           </div>
-          <div className="text-[10px] text-gray-400">
+          <div className="text-[9px] text-stone-400">
             Thresholds E/M/H/D: {encounter.thresholds.easy}/{encounter.thresholds.medium}/
             {encounter.thresholds.hard}/{encounter.thresholds.deadly}
           </div>
         </div>
       </div>
+
       <div
-        className={`rounded-lg border border-white/10 bg-stone-900/80 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}
+        className={`rounded-xl border border-white/10 bg-black/20 ${compact ? 'space-y-1.5 p-2.5 text-[11px]' : 'space-y-2 p-3 text-xs'}`}
       >
-        <h3
-          className={
-            compact
-              ? 'text-sm font-semibold text-amber-300'
-              : 'text-lg font-semibold text-amber-300'
-          }
-        >
-          {t.TurnOrder}
-        </h3>
-        <div className={compact ? 'space-y-1 text-xs' : 'space-y-2 text-sm'}>
+        <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-200">{t.TurnOrder}</h3>
+        <div className="max-h-48 space-y-1.5 overflow-y-auto pr-1">
           {creatures.map((creature) => (
             <div key={creature.id} className="flex min-w-0 justify-between gap-2">
               <span className="truncate">{creature.name}</span>
-              <span className="shrink-0">{creature.initiative}</span>
+              <span className="shrink-0 text-stone-300">{creature.initiative}</span>
             </div>
           ))}
         </div>

@@ -606,21 +606,63 @@ export default function CombatScreen() {
     }
   };
 
+  const resetEncounter = () => {
+    void (async () => {
+      window.localStorage.removeItem(ENCOUNTER_STORAGE_KEY);
+      const nextCreatures = ensureEncounterCreatureIds(
+        await appendMissingTestMonsters(initialCreatures),
+      );
+      setCreatures(nextCreatures);
+      setActiveCreatureId(getFirstActiveCreatureId(nextCreatures));
+      setRound(1);
+      setValidatedInitiativeSnapshot(toValidatedSnapshot(sortCreatures(nextCreatures)));
+      setTurnTransitionError(null);
+      setOrderDriftActive(false);
+      setOrderDriftAcknowledged(false);
+      setOrderDriftDismissed(false);
+    })();
+  };
+
   return (
-    <main className="ui-shell h-[100dvh] overflow-hidden px-4 py-4 text-white md:px-6 lg:px-8">
-      <div className="mx-auto flex h-full min-h-0 max-w-[1800px] flex-col gap-4">
+    <main className="combat-root ui-shell h-[100dvh] overflow-hidden px-3 py-3 text-white md:px-5 md:py-4">
+      <div className="mx-auto flex h-full min-h-0 max-w-[1800px] flex-col gap-2.5">
+        <header className="war-table-panel hidden items-center justify-between rounded-2xl border border-amber-200/20 px-4 py-2.5 xl:flex">
+          <div>
+            <h1 className="font-['Iowan_Old_Style',_'Palatino_Linotype',_Palatino,_serif] text-2xl text-amber-50">
+              Combat Console
+            </h1>
+            <p className="text-xs uppercase tracking-[0.18em] text-stone-300">
+              Round {round} · Turn {sortedCreatures.length === 0 ? 0 : normalizedActiveIndex + 1}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/"
+              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-stone-100 transition hover:bg-white/10"
+            >
+              Home
+            </Link>
+            <Link
+              href="/settings"
+              className="rounded-full border border-amber-200/20 bg-amber-100/10 px-4 py-2 text-sm font-medium text-amber-100 transition hover:bg-amber-100/15"
+            >
+              Settings
+            </Link>
+          </div>
+        </header>
+
         <div className="flex items-center justify-between gap-3 xl:hidden">
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-100 transition hover:bg-white/10"
+              className="rounded-full border border-amber-200/20 bg-amber-100/10 px-4 py-2 text-sm text-amber-100 transition hover:bg-amber-100/20"
               onClick={() => setLeftMenuOpen(true)}
             >
               Controls
             </button>
             <button
               type="button"
-              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-100 transition hover:bg-white/10"
+              className="rounded-full border border-amber-200/20 bg-amber-100/10 px-4 py-2 text-sm text-amber-100 transition hover:bg-amber-100/20"
               onClick={() => setRightMenuOpen(true)}
             >
               Summary
@@ -628,7 +670,7 @@ export default function CombatScreen() {
           </div>
           <Link
             href="/settings"
-            className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/15"
+            className="rounded-full border border-amber-200/20 bg-amber-100/10 px-4 py-2 text-sm font-medium text-amber-100 transition hover:bg-amber-100/15"
           >
             Settings
           </Link>
@@ -648,7 +690,7 @@ export default function CombatScreen() {
 
         <aside
           data-preserve-scroll="true"
-          className={`ui-shell fixed inset-y-0 left-0 z-40 w-[19rem] overflow-y-auto overflow-x-hidden border-r border-amber-300/20 p-4 transition-transform xl:hidden ${
+          className={`ui-shell fixed inset-y-0 left-0 z-40 w-[20rem] overflow-y-auto overflow-x-hidden border-r border-amber-300/20 p-4 shadow-2xl transition-transform xl:hidden ${
             leftMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -670,7 +712,7 @@ export default function CombatScreen() {
 
         <aside
           data-preserve-scroll="true"
-          className={`ui-shell fixed inset-y-0 right-0 z-40 w-[20rem] overflow-y-auto overflow-x-hidden border-l border-amber-300/20 p-4 transition-transform xl:hidden ${
+          className={`ui-shell fixed inset-y-0 right-0 z-40 w-[20rem] overflow-y-auto overflow-x-hidden border-l border-amber-300/20 p-4 shadow-2xl transition-transform xl:hidden ${
             rightMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -689,22 +731,7 @@ export default function CombatScreen() {
             activeCreatureName={activeCreature?.name ?? 'None'}
             missingPlayerInitiatives={missingPlayerInitiatives}
             canRollInitiative={canRollInitiative}
-            onEndCombat={() => {
-              void (async () => {
-                window.localStorage.removeItem(ENCOUNTER_STORAGE_KEY);
-                const nextCreatures = ensureEncounterCreatureIds(
-                  await appendMissingTestMonsters(initialCreatures),
-                );
-                setCreatures(nextCreatures);
-                setActiveCreatureId(getFirstActiveCreatureId(nextCreatures));
-                setRound(1);
-                setValidatedInitiativeSnapshot(toValidatedSnapshot(sortCreatures(nextCreatures)));
-                setTurnTransitionError(null);
-                setOrderDriftActive(false);
-                setOrderDriftAcknowledged(false);
-                setOrderDriftDismissed(false);
-              })();
-            }}
+            onEndCombat={resetEncounter}
             onRollInitiative={rollInitiative}
             onPreviousTurn={previousTurn}
             onNextTurn={nextTurn}
@@ -733,7 +760,7 @@ export default function CombatScreen() {
           </div>
         </aside>
 
-        <div className="mt-4 flex-1 min-h-0 xl:hidden">
+        <div className="flex-1 min-h-0 xl:hidden">
           <InitiativeList
             creatures={sortedCreatures}
             round={round}
@@ -754,10 +781,10 @@ export default function CombatScreen() {
           />
         </div>
 
-        <div className="mt-4 hidden flex-1 min-h-0 gap-4 xl:grid xl:grid-cols-[15rem_minmax(0,1fr)_18rem]">
+        <div className="hidden flex-1 min-h-0 gap-3 xl:grid xl:grid-cols-[18rem_minmax(0,1fr)_20rem]">
           <aside
             data-preserve-scroll="true"
-            className="ui-panel min-h-0 overflow-y-auto overflow-x-hidden shadow-xl"
+            className="ui-panel war-table-panel min-h-0 overflow-y-auto overflow-x-hidden shadow-xl"
           >
             <CreatureSearchPanel
               onAddCreature={addCreature}
@@ -765,7 +792,7 @@ export default function CombatScreen() {
             />
           </aside>
 
-          <section className="ui-panel min-w-0 min-h-0 overflow-hidden shadow-xl">
+          <section className="ui-panel war-table-panel min-w-0 min-h-0 overflow-hidden shadow-xl">
             <InitiativeList
               creatures={sortedCreatures}
               activeCreatureId={activeCreatureId}
@@ -787,7 +814,7 @@ export default function CombatScreen() {
 
           <aside
             data-preserve-scroll="true"
-            className="ui-panel min-h-0 overflow-y-auto overflow-x-hidden shadow-xl"
+            className="ui-panel war-table-panel min-h-0 overflow-y-auto overflow-x-hidden shadow-xl"
           >
             <ControlsPanel
               round={round}
@@ -795,22 +822,7 @@ export default function CombatScreen() {
               activeCreatureName={activeCreature?.name ?? 'None'}
               missingPlayerInitiatives={missingPlayerInitiatives}
               canRollInitiative={canRollInitiative}
-              onEndCombat={() => {
-                void (async () => {
-                  window.localStorage.removeItem(ENCOUNTER_STORAGE_KEY);
-                  const nextCreatures = ensureEncounterCreatureIds(
-                    await appendMissingTestMonsters(initialCreatures),
-                  );
-                  setCreatures(nextCreatures);
-                  setActiveCreatureId(getFirstActiveCreatureId(nextCreatures));
-                  setRound(1);
-                  setValidatedInitiativeSnapshot(toValidatedSnapshot(sortCreatures(nextCreatures)));
-                  setTurnTransitionError(null);
-                  setOrderDriftActive(false);
-                  setOrderDriftAcknowledged(false);
-                  setOrderDriftDismissed(false);
-                })();
-              }}
+              onEndCombat={resetEncounter}
               onRollInitiative={rollInitiative}
               onPreviousTurn={previousTurn}
               onNextTurn={nextTurn}

@@ -36,17 +36,25 @@ export default function ControlsPanel({
 }: ControlsPanelProps) {
   const { t } = useLocale();
   return (
-    <div className={compact ? 'space-y-3' : 'space-y-4'}>
-      <h2 className={compact ? 'text-base font-bold' : 'text-xl font-bold'}>{t.CombatControls}</h2>
+    <div className={compact ? 'space-y-2.5' : 'space-y-3'}>
+      <h2
+        className={
+          compact
+            ? 'text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-300'
+            : 'text-xs font-semibold uppercase tracking-[0.24em] text-stone-300'
+        }
+      >
+        {t.CombatControls}
+      </h2>
 
       <div
-        className={`rounded-2xl border border-white/10 bg-slate-950/50 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}
+        className={`rounded-xl border border-white/10 bg-black/20 ${compact ? 'space-y-1.5 p-2.5' : 'space-y-2 p-3'}`}
       >
         <h3
           className={
             compact
-              ? 'text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
-              : 'text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
+              ? 'text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-300'
+              : 'text-sm font-semibold uppercase tracking-[0.2em] text-stone-300'
           }
         >
           {t.QuickActions}
@@ -55,8 +63,8 @@ export default function ControlsPanel({
           <button
             type="button"
             onClick={onEndCombat}
-            className={`w-full rounded-xl bg-red-600 text-white hover:bg-red-500 ${
-              compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2'
+            className={`w-full rounded-lg border border-red-300/25 bg-red-500/80 text-white transition hover:bg-red-500 ${
+              compact ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
             }`}
           >
             {t.EndCombat}
@@ -65,8 +73,8 @@ export default function ControlsPanel({
             type="button"
             disabled={!canRollInitiative}
             onClick={onRollInitiative}
-            className={`w-full rounded-xl bg-yellow-600 font-semibold text-black hover:bg-yellow-500 disabled:cursor-not-allowed disabled:opacity-50 ${
-              compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2'
+            className={`w-full rounded-lg border border-amber-200/25 bg-amber-300 font-semibold text-stone-900 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-50 ${
+              compact ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
             }`}
           >
             {t.RollInitiative}
@@ -74,8 +82,8 @@ export default function ControlsPanel({
           <button
             type="button"
             onClick={onAddPc}
-            className={`w-full rounded-xl bg-green-600 text-white hover:bg-green-500 ${
-              compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2'
+            className={`w-full rounded-lg border border-emerald-300/20 bg-emerald-600/85 text-white transition hover:bg-emerald-500 ${
+              compact ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
             }`}
           >
             {t.AddPc}
@@ -84,8 +92,8 @@ export default function ControlsPanel({
             <button
               type="button"
               onClick={onExportData}
-              className={`rounded-xl border border-white/20 bg-white/5 text-slate-100 hover:bg-white/10 ${
-                compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'
+              className={`rounded-lg border border-white/15 bg-white/5 text-stone-100 transition hover:bg-white/10 ${
+                compact ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
               }`}
             >
               Export
@@ -93,8 +101,8 @@ export default function ControlsPanel({
             <button
               type="button"
               onClick={onImportData}
-              className={`rounded-xl border border-white/20 bg-white/5 text-slate-100 hover:bg-white/10 ${
-                compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'
+              className={`rounded-lg border border-white/15 bg-white/5 text-stone-100 transition hover:bg-white/10 ${
+                compact ? 'px-2.5 py-1 text-[11px]' : 'px-3 py-1.5 text-xs'
               }`}
             >
               Import
@@ -105,13 +113,13 @@ export default function ControlsPanel({
 
       {(onPreviousTurn || onNextTurn) && (
         <div
-          className={`rounded-2xl border border-cyan-400/20 bg-slate-950/50 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}
+          className={`rounded-xl border border-amber-300/25 bg-amber-950/20 ${compact ? 'space-y-1.5 p-2.5' : 'space-y-2 p-3'}`}
         >
           <h3
             className={
               compact
-                ? 'text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
-                : 'text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
+                ? 'text-xs font-semibold uppercase tracking-[0.2em] text-stone-300'
+                : 'text-sm font-semibold uppercase tracking-[0.2em] text-stone-300'
             }
           >
             {t.TurnNavigation}
@@ -120,14 +128,14 @@ export default function ControlsPanel({
             <button
               type="button"
               onClick={onPreviousTurn}
-              className="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm font-medium text-slate-100 transition hover:bg-white/10"
+              className="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-slate-100 transition hover:bg-white/10"
             >
               {t.PrevTurn}
             </button>
             <button
               type="button"
               onClick={onNextTurn}
-              className="rounded-xl border border-cyan-300/45 bg-cyan-300/20 px-3 py-2 text-sm font-semibold text-cyan-50 shadow-lg shadow-cyan-900/20 transition hover:bg-cyan-300/30"
+              className="rounded-lg border border-amber-200/45 bg-amber-200/20 px-2.5 py-1.5 text-xs font-semibold text-amber-50 shadow-md shadow-amber-900/30 transition hover:bg-amber-200/30"
             >
               {t.NextTurn}
             </button>
@@ -136,13 +144,13 @@ export default function ControlsPanel({
       )}
 
       <div
-        className={`rounded-2xl border border-white/10 bg-slate-950/50 ${compact ? 'space-y-2 p-3' : 'space-y-3 p-4'}`}
+        className={`rounded-xl border border-white/10 bg-black/20 ${compact ? 'space-y-1.5 p-2.5' : 'space-y-2 p-3'}`}
       >
         <h3
           className={
             compact
-              ? 'text-xs font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
-              : 'text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200/80'
+              ? 'text-xs font-semibold uppercase tracking-[0.2em] text-stone-300'
+              : 'text-sm font-semibold uppercase tracking-[0.2em] text-stone-300'
           }
         >
           {t.CombatStatus}
@@ -158,7 +166,7 @@ export default function ControlsPanel({
           </div>
           <div className="flex justify-between gap-3">
             <span className="text-slate-400">{t.Active}</span>
-            <span className="max-w-[14rem] break-words text-right font-semibold leading-tight text-yellow-300">
+            <span className="max-w-[14rem] break-words text-right font-semibold leading-tight text-amber-200">
               {activeCreatureName}
             </span>
           </div>

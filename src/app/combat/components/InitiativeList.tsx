@@ -34,10 +34,16 @@ export default function InitiativeList({
   return (
     <div
       className={
-        compact ? 'flex h-full min-h-0 flex-col gap-2' : 'flex h-full min-h-0 flex-col gap-4'
+        compact ? 'flex h-full min-h-0 flex-col gap-2' : 'flex h-full min-h-0 flex-col gap-3'
       }
     >
-      <h2 className={compact ? 'mb-1 text-lg font-bold' : 'mb-2 text-2xl font-bold'}>
+      <h2
+        className={
+          compact
+            ? 'mb-1 text-base font-semibold uppercase tracking-[0.18em] text-stone-300'
+            : 'mb-2 text-lg font-semibold uppercase tracking-[0.2em] text-stone-300'
+        }
+      >
         {t.InitiativeTracker}
       </h2>
 
